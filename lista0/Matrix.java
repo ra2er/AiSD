@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class Matrix {
 
     int rows; // liczba wierszy
@@ -56,6 +57,19 @@ public class Matrix {
                 this.matrix[i][j] = r.nextDouble();
             }
         }
+    }
+
+    public MatrixMaxValue max() {
+        MatrixMaxValue max = new MatrixMaxValue(this.matrix[0][0], 0, 0);
+        for (int i=0; i<this.rows; i++) {
+            for (int j=0; j<this.cols; j++) {
+                double m = this.matrix[i][j];
+                if (max.isLte(m)) {
+                    max = new MatrixMaxValue(m, i, j);
+                }
+            }
+        }
+        return max;
     }
 
     public String toString() {
@@ -141,6 +155,51 @@ public class Matrix {
                 i++;
             }
             return new Matrix(matrix);
+        }
+        catch (IOException e) {
+            throw e;
+        }
+    }
+
+    public void saveAsBin() {
+        try {
+            FileOutputStream file = new FileOutputStream("matrix.bin");
+            BufferedOutputStream buf = new BufferedOutputStream(file);
+            DataOutputStream writer = new DataOutputStream(buf);
+            writer.writeInt(this.rows);
+            writer.writeInt(this.cols);
+            for (int i=0; i<this.rows; i++) {
+                // wiersze
+                for (int j=0; j<this.cols; j++) {
+                    if (j < this.cols) {
+                        writer.writeDouble(this.matrix[i][j]);
+                    }
+                }
+            }
+            buf.close();
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static Matrix fromBinFile() throws IOException {
+        try {
+            String label = "Macierz";
+            FileInputStream file = new FileInputStream("macierz.bin");
+            BufferedInputStream buf = new BufferedInputStream(file);
+            DataInputStream reader = new DataInputStream(buf);
+            int rows = reader.readInt();
+            int cols = reader.readInt();
+            double matrix[][] = new double[rows][cols];
+            for (int i=0; i<rows; i++) {
+                for (int j=0; j<cols; j++) {
+                    double l = reader.readDouble();
+                    matrix[i][j] = l;
+                }
+            }
+            Matrix m = new Matrix(matrix);
+            return m;
         }
         catch (IOException e) {
             throw e;
