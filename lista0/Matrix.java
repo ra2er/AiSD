@@ -89,23 +89,33 @@ public class Matrix {
         for (int cw: colsWidth) {
             rowWidth += cw;
         }
-        rowWidth += 1; // dla pierwszej kolumny dodajemy "|"
-        rowWidth += this.cols; // dla pozostałych kolumn dodajemy "|"
-        String s = new String(new char[rowWidth]).replace("", "=") + "\n";
+        rowWidth += this.cols + 4; // dla pozostałych kolumn dodajemy "|" a dla numeru wiersza 4 pola
+        String border = String.format("%n%s%n", new String(new char[rowWidth]).replace("", "="));
+        String s = border;
+        String tableHeader = new String("");
+        for (int i=0; i<colsWidth.length; i++) {
+            if (i == 0) {
+                tableHeader += "|   |";
+            }
+            tableHeader += String.format("%-" + colsWidth[i] + "s|", i);
+        }
+        s += tableHeader;
+        s += border;
         for (int i=0; i<this.rows; i++) {
             for (int j=0; j<this.cols; j++) {
                 int precision = DoubleFormatter.getPrecision(this.matrix[i][j]);
                 String formatter = "%" + String.format("%d.%df|", colsWidth[j], precision);
                 if (j == 0) {
-                    formatter = "| " + formatter;
+                    formatter = String.format("|%3d|", i) + formatter;
                 }
                 s += String.format(formatter, this.matrix[i][j]);
             }
             if (i != this.rows - 1){
-                s += "\n" + new String(new char[rowWidth]).replace("", "-") + "\n";
+                s += String.format("%n%s%n", new String(new char[rowWidth]).replace("", "-"));
             }
         }
-        s += "\n" + new String(new char[rowWidth]).replace("", "=");
+        border = String.format("%n%s", new String(new char[rowWidth]).replace("", "="));
+        s += border;
         return s;
     }
 
@@ -150,9 +160,11 @@ public class Matrix {
                     double l = s.nextDouble();
                     matrix[i][j] = l;
                     j++;
+                    if (j == cols) {
+                        j = 0;
+                        i++;
+                    }
                 }
-                j = 0;
-                i++;
             }
             return new Matrix(matrix);
         }
