@@ -198,7 +198,7 @@ public class Matrix {
     public static Matrix fromBinFile() throws IOException {
         try {
             String label = "Macierz";
-            FileInputStream file = new FileInputStream("macierz.bin");
+            FileInputStream file = new FileInputStream("matrix.bin");
             BufferedInputStream buf = new BufferedInputStream(file);
             DataInputStream reader = new DataInputStream(buf);
             int rows = reader.readInt();
