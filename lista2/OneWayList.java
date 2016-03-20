@@ -116,6 +116,22 @@ class OneWayList implements List {
         throw new NullPointerException();
     }
 
+    public OneWayList deleteAll(Object obj) {
+        OneWayListIterator iter = this.iterator();
+        OneWayList deleted = new OneWayList();
+        iter.first();
+        while (!iter.isDone()) {
+            try {
+                Element toDelete = this.delete(obj);
+                deleted.add(toDelete.value);
+                iter.next();
+            } catch (NullPointerException e) {
+                break;
+            }
+        }
+        return deleted;
+    }
+
     public String toString() {
         String s = "";
         OneWayListIterator iter = this.iterator();
