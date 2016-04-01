@@ -37,19 +37,18 @@ class OneWayList implements List {
     }
 
     public void add(Object obj) {
+        Element newElement = new Element(obj);
         if (this.list == null) {
-            Element newElement = new Element(obj);
             this.list = newElement;
             this.firstObj = newElement;
             this.lastObj = newElement;
             this.length = 1;
         }
         else {
-            Element newElement = new Element(obj);
-            this.lastObj.next = newElement;
-            this.lastObj = newElement;
             this.length += 1;
         }
+        this.lastObj.next = newElement;
+        this.lastObj = newElement;
     }
 
     public Element get(int index) throws IndexOutOfBoundsException {
@@ -132,6 +131,19 @@ class OneWayList implements List {
         return deleted;
     }
 
+    public boolean contains(Object obj) {
+        OneWayListIterator iter = this.iterator();
+        iter.first();
+        while (!iter.isDone()) {
+            Element current = iter.current();
+            iter.next();
+            if (current.value.equals(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String toString() {
         String s = "";
         OneWayListIterator iter = this.iterator();
@@ -141,5 +153,4 @@ class OneWayList implements List {
         }
         return s;
     }
-
 }

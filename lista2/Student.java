@@ -1,10 +1,9 @@
 public class Student {
 
-    int indexNum;
-    String firstName;
-    String lastName;
-    int grade;
-    Student next;
+    public int indexNum;
+    public String firstName;
+    public String lastName;
+    public int grade;
 
     public Student() {};
 
@@ -20,6 +19,6 @@ public class Student {
     }
 
     public boolean equals(Student other) {
-        return this.indexNum == other.indexNum && this.firstName == other.firstName && this.lastName == other.lastName;
+        return this.indexNum == other.indexNum;
     }
 }
