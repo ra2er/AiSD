@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class Zad1 {
+public class Zad1i2 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

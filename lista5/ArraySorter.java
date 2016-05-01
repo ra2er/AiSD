@@ -37,7 +37,7 @@ public class ArraySorter<T extends Comparable> {
         this.switches = 0;
         for (int i=array.length; i>1; i--) {
             boolean switched = false;
-            for (int k=0; k<array.length-1; k++){
+            for (int k=0; k<i-1; k++){
                 T current = array[k];
                 T next = array[k+1];
                 int cmp = this.compare(current, next);
@@ -74,18 +74,16 @@ public class ArraySorter<T extends Comparable> {
     public T[] insertSort(T[] array) {
         this.compares = 0;
         this.switches = 0;
-        T[] result = array.clone();
-        for (int i=0; i<array.length; i++) {
-            int pos = result.length;
-            for (int k=array.length-1; k>=0; k--) {
-                int cmp = this.compare(array[k], array[i]);
-                if (cmp >=0) {
-                    pos--;
-                }
+        int i, k;
+        for (i=1; i<array.length; i++) {
+            T key = array[i];
+            for (k=i-1; (k>=0 && this.compare(array[k], key) >= 0); k--) {
+                array[k+1] = array[k];
             }
-            result[pos] = array[i];
+            array[k+1] = key;
+            this.switches++;
         }
         System.out.println(String.format("Comparsions: %d, Switches: %d", this.compares, this.switches));
-        return result;
+        return array;
     }
 }
