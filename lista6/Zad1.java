@@ -62,6 +62,9 @@ public class Zad1 {
         }
         while(stack.list.size() > 0) {
             Book b = stack.dequeue();
+            if (N <= 10) {
+                System.out.println(b);
+            }
         }
         System.out.println(String.format("Comparsions: %d, Swaps: %d", stack.compares, stack.swaps));
     }

@@ -85,13 +85,13 @@ public class StackPriorityQueue<T extends Comparable> {
                     }
                 }
             }
-            if (n == index) {
-                break;
-            }
             T tmp = this.list.get(n);
             this.list.set(n, object);
             this.list.set(index, tmp);
             this.swaps++;
+            if (n == index) {
+                break;
+            }
             object = this.list.get(n);
         }
     }
